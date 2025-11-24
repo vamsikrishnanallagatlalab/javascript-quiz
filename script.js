@@ -1,28 +1,133 @@
 const questions = [
   {
-    question: "Which HTML tag is used to define an internal stylesheet?",
-    options: ["<script>", "<style>", "<css>", "<link>"],
+    question: "Which HTML element is used to embed JavaScript?",
+    options: ["<js>", "<script>", "<javascript>", "<code>"],
     correct: 1
   },
   {
-    question: "How do you write 'Hello World' in an alert box?",
-    options: ["alertBox('Hello World');", "msg('Hello World');", "alert('Hello World');", "msgBox('Hello World');"],
+    question: "How do you declare a block-scoped variable in JavaScript?",
+    options: ["var", "let", "const", "Both let and const"],
+    correct: 3
+  },
+  {
+    question: "What does 'DOM' stand for?",
+    options: ["Document Object Model", "Data Object Manager", "Dynamic Object Markup", "Document-Oriented Model"],
+    correct: 0
+  },
+  {
+    question: "Which method adds an element to the end of an array?",
+    options: ["push()", "pop()", "shift()", "unshift()"],
+    correct: 0
+  },
+  {
+    question: "How do you select an element by its ID in JavaScript?",
+    options: ["document.find('#id')", "document.select('#id')", "document.getElementById('id')", "document.queryId('id')"],
     correct: 2
   },
   {
-    question: "Which event occurs when the user clicks on an HTML element?",
-    options: ["onchange", "onclick", "onmouseclick", "onhover"],
+    question: "What is the output of: console.log(typeof [])?",
+    options: ["array", "object", "list", "undefined"],
     correct: 1
   },
   {
-    question: "How do you create a function in JavaScript?",
-    options: ["function:myFunction()", "function myFunction()", "function = myFunction()", "myFunction() => {}"],
+    question: "Which keyword is used to declare a constant in JavaScript?",
+    options: ["constant", "const", "let", "var"],
     correct: 1
   },
   {
-    question: "What is the correct syntax for referring to an external script called 'app.js'?",
-    options: ["<script href='app.js'>", "<script name='app.js'>", "<script src='app.js'>", "<script file='app.js'>"],
+    question: "How do you define an arrow function that returns the square of a number?",
+    options: [
+      "x => x * x",
+      "function(x) => x * x",
+      "(x) { return x * x }",
+      "=> x * x"
+    ],
+    correct: 0
+  },
+  {
+    question: "Which event fires when a page finishes loading?",
+    options: ["onload", "onready", "oncomplete", "onfinish"],
+    correct: 0
+  },
+  {
+    question: "What does 'async' before a function declaration do?",
+    options: [
+      "Makes the function run in a separate thread",
+      "Ensures the function returns a Promise",
+      "Pauses the entire program",
+      "Optimizes the function for speed"
+    ],
+    correct: 1
+  },
+  {
+    question: "How do you prevent the default action of an event (e.g., form submit)?",
+    options: [
+      "event.stop()",
+      "event.preventDefault()",
+      "return false",
+      "Both event.preventDefault() and return false"
+    ],
+    correct: 3
+  },
+  {
+    question: "Which method converts a JSON string into a JavaScript object?",
+    options: ["JSON.stringify()", "JSON.parse()", "JSON.toObject()", "Object.fromJSON()"],
+    correct: 1
+  },
+  {
+    question: "What is the result of: '5' + 3 in JavaScript?",
+    options: ["8", "'53'", "TypeError", "'8'"],
+    correct: 1
+  },
+  {
+    question: "Which CSS property controls the space between elements?",
+    options: ["padding", "spacing", "margin", "gap"],
     correct: 2
+  },
+  {
+    question: "How do you add a CSS class to an element using JavaScript?",
+    options: [
+      "element.addClass('my-class')",
+      "element.className += ' my-class'",
+      "element.classList.add('my-class')",
+      "element.css('class', 'my-class')"
+    ],
+    correct: 2
+  },
+  {
+    question: "What does the spread operator (...) do in: [...arr]?",
+    options: [
+      "Creates a shallow copy of the array",
+      "Converts array to string",
+      "Flattens nested arrays",
+      "Reverses the array"
+    ],
+    correct: 0
+  },
+  {
+    question: "Which method waits for a Promise to resolve?",
+    options: ["then()", "await", "resolve()", "Both then() and await"],
+    correct: 3
+  },
+  {
+    question: "What is the purpose of 'use strict' in JavaScript?",
+    options: [
+      "Enables experimental features",
+      "Makes code run faster",
+      "Enforces stricter parsing and error handling",
+      "Imports strict mode libraries"
+    ],
+    correct: 2
+  },
+  {
+    question: "Which HTTP method is used to send data to create a resource?",
+    options: ["GET", "POST", "PUT", "DELETE"],
+    correct: 1
+  },
+  {
+    question: "What does the following code log? \n setTimeout(() => console.log(1), 0); console.log(2);",
+    options: ["1, 2", "2, 1", "1", "2"],
+    correct: 1
   }
 ];
 
@@ -97,14 +202,14 @@ function showResults() {
   resetState();
   questionEl.innerHTML = `
     <div class="text-center">
-      <h2> Quiz Complete!</h2>
-      <div class="alert alert-primary mt-3" role="alert">
+      <h2>🎉 Quiz Complete!</h2>
+      <div class="alert alert-primary mt-3 score-alert" role="alert">
         You scored <strong>${score}</strong> out of <strong>${shuffledQuestions.length}</strong>
       </div>
       <p class="text-muted">Great job!</p>
     </div>
   `;
-  nextButton.textContent = 'Restart Quiz';
+  nextButton.textContent = '↺ Restart Quiz';
   nextButton.style.display = 'inline-block';
   nextButton.onclick = startQuiz;
 }
