@@ -202,7 +202,7 @@ function showResults() {
   resetState();
   questionEl.innerHTML = `
     <div class="text-center">
-      <h2>🎉 Quiz Complete!</h2>
+      <h2> Quiz Complete!</h2>
       <div class="alert alert-primary mt-3 score-alert" role="alert">
         You scored <strong>${score}</strong> out of <strong>${shuffledQuestions.length}</strong>
       </div>
