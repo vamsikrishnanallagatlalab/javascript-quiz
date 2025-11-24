@@ -1,3 +1,37 @@
+// ===== Dark/Light Mode Toggle =====
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const html = document.documentElement;
+
+function setTheme(theme) {
+  if (theme === 'dark') {
+    html.setAttribute('data-theme', 'dark');
+    themeIcon.className = 'fas fa-sun';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    html.removeAttribute('data-theme');
+    themeIcon.className = 'fas fa-moon';
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// Initialize theme
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+  setTheme('dark');
+} else {
+  setTheme('light');
+}
+
+// Toggle on click
+themeToggle?.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  setTheme(current);
+});
+
+// ===== Quiz Logic =====
 const questions = [
   { question: "1. Which HTML element is used to embed JavaScript?", options: ["<js>", "<script>", "<javascript>", "<code>"], correct: 1 },
   { question: "2. How do you declare a block-scoped variable in JavaScript?", options: ["var", "let", "const", "Both let and const"], correct: 3 },
@@ -108,12 +142,10 @@ function showQuestion() {
     answerButtonsEl.appendChild(button);
   });
 
-  // Hide Next on last question
-  if (currentQuestionIndex === shuffledQuestions.length - 1) {
-    nextButton.textContent = 'Finish Quiz';
-  } else {
-    nextButton.textContent = 'Next Question';
-  }
+  // Update Next/Finish text
+  nextButton.textContent = currentQuestionIndex === shuffledQuestions.length - 1 
+    ? 'Finish Quiz' 
+    : 'Next Question';
 }
 
 function resetState() {
@@ -130,13 +162,14 @@ function selectAnswer(selectedBtn, isCorrect) {
   selectedBtn.classList.add(isCorrect ? 'btn-success' : 'btn-danger');
   selectedBtn.disabled = true;
 
-  // Highlight correct if wrong
+  // Highlight correct answer if wrong
   if (!isCorrect) {
     const correctIndex = shuffledQuestions[currentQuestionIndex].correct;
     const allBtns = answerButtonsEl.querySelectorAll('button');
-    allBtns[correctIndex].classList.remove('btn-outline-secondary');
-    allBtns[correctIndex].classList.add('btn-success');
-    allBtns[correctIndex].disabled = true;
+    const correctBtn = allBtns[correctIndex];
+    correctBtn.classList.remove('btn-outline-secondary');
+    correctBtn.classList.add('btn-success');
+    correctBtn.disabled = true;
   }
 
   nextButton.style.display = 'inline-block';
@@ -164,6 +197,7 @@ function showResults() {
     </div>
   `;
   nextButton.textContent = '↺ Restart Quiz';
+  // Use onclick to avoid duplicate listeners
   nextButton.onclick = startQuiz;
 }
 
