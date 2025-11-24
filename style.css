@@ -1,12 +1,64 @@
+/* ===== Theme Variables (Light Mode Default) ===== */
+:root {
+  /* Light mode */
+  --bg-body: #f5f7fa;
+  --bg-gradient-start: #f5f7fa;
+  --bg-gradient-end: #e4edf5;
+  --card-bg: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --sidebar-bg: #ffffff;
+  --list-item-bg: #ffffff;
+  --list-item-hover: #f1f5f9;
+  --list-item-active-bg: #dbeafe;
+  --list-item-active-border: #93c5fd;
+  --list-item-active-text: #1d4ed8;
+  --progress-bg: #e2e8f0;
+  --btn-outline: #e2e8f0;
+  --btn-outline-hover: #cbd5e1;
+  --shadow-light: rgba(0, 0, 0, 0.12);
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  --status-unanswered: #94a3b8;
+  --status-correct: #10b981;
+  --status-incorrect: #ef4444;
+}
+
+[data-theme="dark"] {
+  /* Dark mode */
+  --bg-body: #0f172a;
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #1e293b;
+  --card-bg: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+  --sidebar-bg: #1e293b;
+  --list-item-bg: #334155;
+  --list-item-hover: #475569;
+  --list-item-active-bg: #334155;
+  --list-item-active-border: #60a5fa;
+  --list-item-active-text: #93c5fd;
+  --progress-bg: #334155;
+  --btn-outline: #475569;
+  --btn-outline-hover: #64748b;
+  --status-unanswered: #94a3b8;
+  --status-correct: #34d399;
+  --status-incorrect: #f87171;
+}
+
 /* ===== 1. Body & Container ===== */
 body {
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)) !important;
   min-height: 100vh;
   padding: 0;
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ===== 2. Quiz Card ===== */
 .quiz-card {
+  background-color: var(--card-bg) !important;
   border: none;
   border-radius: 16px;
   overflow: hidden;
@@ -15,13 +67,17 @@ body {
 
 .quiz-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1rem 2rem var(--shadow-light);
+}
+
+[data-theme="dark"] .quiz-card:hover {
+  box-shadow: 0 1rem 2rem var(--shadow-dark);
 }
 
 /* ===== 3. Question Styling ===== */
 .card-title {
   font-weight: 700;
-  color: #2d3748;
+  color: var(--text-primary) !important;
   font-size: 1.5rem;
   line-height: 1.4;
 }
@@ -32,26 +88,30 @@ body {
   font-weight: 500;
   transition: all 0.25s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  background-color: transparent !important;
+  border: 1px solid var(--btn-outline) !important;
+  color: var(--text-primary) !important;
 }
 
 .btn-choice:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  background-color: #f8f9fa !important;
+  background-color: var(--list-item-hover) !important;
+  border-color: var(--btn-outline-hover) !important;
 }
 
 /* Correct Answer */
 .btn-success {
-  background-color: #4ade80 !important; /* emerald-400 */
-  border-color: #22c55e !important;      /* emerald-500 */
+  background-color: var(--status-correct) !important;
+  border-color: var(--status-correct) !important;
   color: white !important;
   font-weight: 600;
 }
 
 /* Incorrect Answer */
 .btn-danger {
-  background-color: #f87171 !important; /* red-400 */
-  border-color: #ef4444 !important;     /* red-500 */
+  background-color: var(--status-incorrect) !important;
+  border-color: var(--status-incorrect) !important;
   color: white !important;
   font-weight: 600;
 }
@@ -85,6 +145,9 @@ body {
   font-size: 1.25rem;
   font-weight: 600;
   border-radius: 12px;
+  color: var(--text-primary) !important;
+  background-color: var(--list-item-hover) !important;
+  border: 1px solid var(--border-color) !important;
 }
 
 /* ===== 7. Progress Bar ===== */
@@ -92,7 +155,7 @@ body {
   border-radius: 5px;
   overflow: hidden;
   height: 10px;
-  background-color: #e2e8f0;
+  background-color: var(--progress-bg) !important;
 }
 
 .progress-bar {
@@ -102,14 +165,15 @@ body {
 /* Progress text */
 #progress-text {
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary) !important;
 }
 
 /* ===== 8. Sidebar & Question List ===== */
 .quiz-sidebar {
   height: 100vh;
   overflow-y: auto;
-  box-shadow: inset -1px 0 0 rgba(0,0,0,0.1);
+  background-color: var(--sidebar-bg) !important;
+  box-shadow: inset -1px 0 0 var(--border-color);
 }
 
 /* Question list items */
@@ -119,20 +183,22 @@ body {
   margin-bottom: 6px;
   padding: 0.65rem 1rem !important;
   font-size: 0.92rem;
-  border: 1px solid #e2e8f0;
+  background-color: var(--list-item-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
   transition: all 0.2s ease;
 }
 
 .list-group-item:hover {
-  background-color: #f1f5f9;
-  border-color: #cbd5e1;
+  background-color: var(--list-item-hover) !important;
+  border-color: var(--border-color) !important;
   transform: translateX(4px);
 }
 
 .list-group-item.active {
-  background-color: #dbeafe !important;
-  border-color: #93c5fd !important;
-  color: #1d4ed8 !important;
+  background-color: var(--list-item-active-bg) !important;
+  border-color: var(--list-item-active-border) !important;
+  color: var(--list-item-active-text) !important;
   font-weight: 600;
   transform: translateX(0);
 }
@@ -148,26 +214,49 @@ body {
   flex-shrink: 0;
 }
 
-.status-unanswered { background-color: #94a3b8; }
-.status-correct     { background-color: #10b981; }
-.status-incorrect   { background-color: #ef4444; }
+.status-unanswered { background-color: var(--status-unanswered); }
+.status-correct     { background-color: var(--status-correct); }
+.status-incorrect   { background-color: var(--status-incorrect); }
 
 /* Sidebar header */
 .quiz-sidebar .offcanvas-header,
 .quiz-sidebar h5 {
   font-weight: 700;
-  color: #1e293b;
-  border-bottom: 1px solid #e2e8f0;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
 }
 
-/* Mobile offcanvas tweak */
+/* Offcanvas (mobile sidebar) */
 .offcanvas {
+  background-color: var(--sidebar-bg) !important;
+  color: var(--text-primary) !important;
   width: 280px;
 }
 
-/* ===== 9. Responsive Tweaks ===== */
+.offcanvas-title {
+  color: var(--text-primary) !important;
+}
+
+/* ===== 9. Theme Toggle Button ===== */
+#theme-toggle {
+  z-index: 1000;
+  color: var(--text-secondary) !important;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#theme-toggle:hover {
+  background-color: var(--list-item-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ===== 10. Responsive Tweaks ===== */
 @media (max-width: 767.98px) {
   /* Hide desktop sidebar */
   .quiz-sidebar {
@@ -206,4 +295,9 @@ body {
   #progress-text {
     font-size: 0.85rem;
   }
+}
+
+/* Smooth global transitions */
+*, *::before, *::after {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
