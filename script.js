@@ -66,7 +66,6 @@ const questionListMobile = document.getElementById('question-list-mobile');
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-// Track answer status: null = unanswered, true = correct, false = incorrect
 let questionStatus = [];
 
 // Shuffle questions
@@ -106,7 +105,6 @@ function renderQuestionList() {
       item.addEventListener('click', () => {
         currentQuestionIndex = index;
         showQuestion();
-        // Close offcanvas on mobile after selection
         const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasSidebar'));
         if (offcanvas) offcanvas.hide();
       });
@@ -129,7 +127,7 @@ function updateProgress() {
 function showQuestion() {
   resetState();
   updateProgress();
-  renderQuestionList(); // Update active item
+  renderQuestionList();
 
   const q = shuffledQuestions[currentQuestionIndex];
   questionEl.textContent = q.question;
@@ -142,7 +140,6 @@ function showQuestion() {
     answerButtonsEl.appendChild(button);
   });
 
-  // Update Next/Finish text
   nextButton.textContent = currentQuestionIndex === shuffledQuestions.length - 1 
     ? 'Finish Quiz' 
     : 'Next Question';
@@ -153,16 +150,13 @@ function resetState() {
 }
 
 function selectAnswer(selectedBtn, isCorrect) {
-  // Record status
   questionStatus[currentQuestionIndex] = isCorrect;
   if (isCorrect) score++;
 
-  // Visual feedback
   selectedBtn.classList.remove('btn-outline-secondary');
   selectedBtn.classList.add(isCorrect ? 'btn-success' : 'btn-danger');
   selectedBtn.disabled = true;
 
-  // Highlight correct answer if wrong
   if (!isCorrect) {
     const correctIndex = shuffledQuestions[currentQuestionIndex].correct;
     const allBtns = answerButtonsEl.querySelectorAll('button');
@@ -175,29 +169,50 @@ function selectAnswer(selectedBtn, isCorrect) {
   nextButton.style.display = 'inline-block';
 }
 
-// Next/Finish button handler
-nextButton.addEventListener('click', () => {
+// Use `onclick` to prevent duplicate listeners
+nextButton.onclick = () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < shuffledQuestions.length) {
     showQuestion();
   } else {
     showResults();
   }
-});
+};
 
 function showResults() {
   resetState();
+  
+  //  Dynamic feedback based on score
+  let message, emoji, alertClass;
+  
+  if (score === 20) {
+    message = "Congrats! You got full points ";
+    alertClass = "alert-success";
+  } else if (score > 15) {
+    message = "Great Job! ";
+    alertClass = "alert-success";
+  } else if (score >= 10) {
+    message = "Really Good Score but could do better ";
+    alertClass = "alert-info";
+  } else if (score >= 5) {
+    message = "OK score — give it another try ";
+    alertClass = "alert-warning";
+  } else {
+    message = "Bad luck — try again! ";
+    alertClass = "alert-danger";
+  }
+
   questionEl.innerHTML = `
     <div class="text-center">
-      <h2>🎉 Quiz Complete!</h2>
-      <div class="alert alert-primary mt-3 score-alert" role="alert">
-        You scored <strong>${score}</strong> out of <strong>${shuffledQuestions.length}</strong>
+      <div class="fs-1 mb-3">${emoji}</div>
+      <h2 class="mb-4">${message}</h2>
+      <div class="alert ${alertClass} score-alert" role="alert">
+        You scored <strong>${score}</strong> out of <strong>20</strong>
       </div>
-      <p class="text-muted">Great job!</p>
     </div>
   `;
+  
   nextButton.textContent = '↺ Restart Quiz';
-  // Use onclick to avoid duplicate listeners
   nextButton.onclick = startQuiz;
 }
 
