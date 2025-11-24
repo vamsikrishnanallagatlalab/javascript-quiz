@@ -1,13 +1,11 @@
-
-
-/* 1. Body & Container */
+/* ===== 1. Body & Container ===== */
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
   min-height: 100vh;
-  padding: 20px 0;
+  padding: 0;
 }
 
-/* 2. Quiz Card */
+/* ===== 2. Quiz Card ===== */
 .quiz-card {
   border: none;
   border-radius: 16px;
@@ -20,7 +18,7 @@ body {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
 }
 
-/* 3. Question Styling */
+/* ===== 3. Question Styling ===== */
 .card-title {
   font-weight: 700;
   color: #2d3748;
@@ -28,7 +26,7 @@ body {
   line-height: 1.4;
 }
 
-/* 4. Answer Buttons — Sleek & Modern */
+/* ===== 4. Answer Buttons — Sleek & Modern ===== */
 .btn-choice {
   border-radius: 10px !important;
   font-weight: 500;
@@ -64,7 +62,7 @@ body {
   cursor: default;
 }
 
-/* 5. Next Button */
+/* ===== 5. Next Button ===== */
 #next-btn {
   padding: 0.75rem 2rem;
   font-weight: 600;
@@ -77,7 +75,7 @@ body {
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* 6. Results Screen */
+/* ===== 6. Results Screen ===== */
 .results-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -89,18 +87,123 @@ body {
   border-radius: 12px;
 }
 
-/* 7. Responsive Tweaks */
-@media (max-width: 576px) {
+/* ===== 7. Progress Bar ===== */
+.progress {
+  border-radius: 5px;
+  overflow: hidden;
+  height: 10px;
+  background-color: #e2e8f0;
+}
+
+.progress-bar {
+  transition: width 0.4s ease;
+}
+
+/* Progress text */
+#progress-text {
+  font-weight: 600;
+  color: #475569;
+}
+
+/* ===== 8. Sidebar & Question List ===== */
+.quiz-sidebar {
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: inset -1px 0 0 rgba(0,0,0,0.1);
+}
+
+/* Question list items */
+.list-group-item {
+  cursor: pointer;
+  border-radius: 8px !important;
+  margin-bottom: 6px;
+  padding: 0.65rem 1rem !important;
+  font-size: 0.92rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateX(4px);
+}
+
+.list-group-item.active {
+  background-color: #dbeafe !important;
+  border-color: #93c5fd !important;
+  color: #1d4ed8 !important;
+  font-weight: 600;
+  transform: translateX(0);
+}
+
+/* Status indicator dot */
+.q-status {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.status-unanswered { background-color: #94a3b8; }
+.status-correct     { background-color: #10b981; }
+.status-incorrect   { background-color: #ef4444; }
+
+/* Sidebar header */
+.quiz-sidebar .offcanvas-header,
+.quiz-sidebar h5 {
+  font-weight: 700;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Mobile offcanvas tweak */
+.offcanvas {
+  width: 280px;
+}
+
+/* ===== 9. Responsive Tweaks ===== */
+@media (max-width: 767.98px) {
+  /* Hide desktop sidebar */
+  .quiz-sidebar {
+    display: none !important;
+  }
+
+  /* Improve mobile spacing */
+  .p-4 {
+    padding: 1.25rem !important;
+  }
+
   .card-body {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
   }
-  
+
   .card-title {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
-  
+
   .btn-choice {
-    padding: 0.65rem 1rem !important;
-    font-size: 0.95rem;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.9rem;
+  }
+
+  /* Progress bar smaller on mobile */
+  .progress {
+    height: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  #progress-text {
+    font-size: 0.85rem;
   }
 }
