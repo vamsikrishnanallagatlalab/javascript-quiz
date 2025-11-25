@@ -188,7 +188,7 @@ if (nextButton) {
 function showResults() {
   resetState();
   
-  //  FIXED: Added missing emoji variable
+  // FIXED: Added missing emoji assignments
   let message, emoji, alertClass;
   
   if (score === 20) {
@@ -201,10 +201,10 @@ function showResults() {
     message = "Really Good Score but could do better ";
     alertClass = "alert-info";
   } else if (score >= 5) {
-    message = "OK score — give it another try";
+    message = "OK score — give it another try ";
     alertClass = "alert-warning";
   } else {
-    message = "Bad luck — try again!";
+    message = "Bad luck — try again! ";
     alertClass = "alert-danger";
   }
 
