@@ -157,12 +157,6 @@ body {
   line-height: 1;
 }
 
-/* Question numbering in sidebar — fix overlap */
-.list-group-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* ===== 7. Progress Bar — Fixed Visibility ===== */
 .progress {
   border-radius: 5px;
@@ -175,20 +169,23 @@ body {
   transition: width 0.4s ease;
 }
 
-/* ✅ CRITICAL FIX: Progress text now readable in both modes */
+/*  PROGRESS TEXT: High-contrast, readable, mobile-safe */
 #progress-text {
   font-weight: 600;
   color: var(--text-primary) !important;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 0.15rem 0.6rem;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.15rem 0.65rem;
   border-radius: 6px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] #progress-text {
-  background: rgba(30, 41, 59, 0.9);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  background: rgba(30, 41, 59, 0.85);
+  color: #f1f5f9 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ===== 8. Sidebar & Question List ===== */
@@ -199,7 +196,6 @@ body {
   box-shadow: inset -1px 0 0 var(--border-color);
 }
 
-/* Question list items */
 .list-group-item {
   cursor: pointer;
   border-radius: 8px !important;
@@ -212,6 +208,8 @@ body {
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .list-group-item:hover {
@@ -228,7 +226,6 @@ body {
   transform: translateX(0);
 }
 
-/* Status indicator dot */
 .q-status {
   display: inline-block;
   width: 12px;
@@ -236,15 +233,12 @@ body {
   border-radius: 50%;
   margin-right: 10px;
   flex-shrink: 0;
-  margin-left: 2px;
 }
 
 .status-unanswered { background-color: var(--status-unanswered); }
 .status-correct     { background-color: var(--status-correct); }
 .status-incorrect   { background-color: var(--status-incorrect); }
 
-/* Sidebar header */
-.quiz-sidebar .offcanvas-header,
 .quiz-sidebar h5 {
   font-weight: 700;
   color: var(--text-primary) !important;
@@ -253,49 +247,53 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Offcanvas (mobile sidebar) */
 .offcanvas {
   background-color: var(--sidebar-bg) !important;
   color: var(--text-primary) !important;
   width: 280px;
 }
 
-.offcanvas-title {
-  color: var(--text-primary) !important;
-}
-
-/* ===== 9. Theme Toggle Button ===== */
+/* ===== 9. Theme Toggle — Final Polish ===== */
 #theme-toggle {
-  z-index: 1000;
+  z-index: 1030; /* Above Bootstrap modals (1020–1050 range) */
   color: var(--text-secondary) !important;
-  font-size: 1.25rem;
-  padding: 0.3rem;
+  font-size: 1.3rem;
+  padding: 0.4rem;
   border-radius: 50%;
-  background: transparent;
+  background: transparent !important;
   border: none;
   transition: background-color 0.2s, color 0.2s;
 }
 
 #theme-toggle:hover {
-  background-color: var(--list-item-hover) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
   color: var(--text-primary) !important;
 }
 
-/* Add slight right margin on mobile to avoid edge */
+[data-theme="dark"] #theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Ensure safe distance from edge */
+#theme-toggle {
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+}
+
+/* Mobile: shrink slightly */
 @media (max-width: 576px) {
   #theme-toggle {
-    margin-left: 0.75rem !important;
+    font-size: 1.2rem;
+    padding: 0.35rem;
   }
 }
 
-/* ===== 10. Responsive Tweaks ===== */
+/* ===== 10. Responsive Layout Fixes ===== */
 @media (max-width: 767.98px) {
-  /* Hide desktop sidebar */
   .quiz-sidebar {
     display: none !important;
   }
 
-  /* Improve mobile spacing */
   .p-4 {
     padding: 1.25rem !important;
   }
@@ -313,7 +311,6 @@ body {
     font-size: 0.9rem;
   }
 
-  /* Progress bar smaller on mobile */
   .progress {
     height: 8px;
   }
@@ -322,19 +319,20 @@ body {
     padding: 0.1rem 0.5rem;
     font-size: 0.8rem;
   }
-}
-
-@media (max-width: 576px) {
-  .card-title {
-    font-size: 1.2rem;
-  }
 
   .fs-1 {
     font-size: 2.8rem !important;
   }
 }
 
-/* Smooth global transitions */
+/* Prevent content from going under fixed toggle */
+@media (max-width: 767px) {
+  .p-4 {
+    padding-top: 2.5rem !important; /* Extra top padding on mobile */
+  }
+}
+
+/* Smooth transitions */
 *, *::before, *::after {
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
