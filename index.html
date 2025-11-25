@@ -12,12 +12,6 @@
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
-  <!--  Theme Toggle: Top-Right, Fixed, with Safe Spacing -->
-  <button id="theme-toggle" class="btn btn-link position-fixed top-0 end-0 p-3 mt-2 me-2 text-decoration-none fs-4 z-3"
-          aria-label="Toggle dark/light mode">
-    <i id="theme-icon" class="fas fa-moon"></i>
-  </button>
-
   <div class="container-fluid px-0">
     <div class="row g-0 min-vh-100">
       <!-- Sidebar (Desktop) -->
@@ -51,6 +45,14 @@
 
       <!-- Main Quiz Area -->
       <div class="col-md-9 col-lg-10 d-flex flex-column">
+        <!-- Theme Toggle: Centered above content (non-fixed) -->
+        <div class="d-flex justify-content-center py-3">
+          <button id="theme-toggle" class="btn btn-link text-decoration-none fs-4"
+                  aria-label="Toggle dark/light mode">
+            <i id="theme-icon" class="fas fa-moon"></i>
+          </button>
+        </div>
+
         <div class="p-4 flex-grow-1 d-flex flex-column">
           <!-- Progress Bar -->
           <div class="mb-4">
