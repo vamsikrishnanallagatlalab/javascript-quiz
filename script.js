@@ -6,11 +6,11 @@ const html = document.documentElement;
 function setTheme(theme) {
   if (theme === 'dark') {
     html.setAttribute('data-theme', 'dark');
-    themeIcon.className = 'fas fa-sun';
+    if (themeIcon) themeIcon.className = 'fas fa-sun';
     localStorage.setItem('theme', 'dark');
   } else {
     html.removeAttribute('data-theme');
-    themeIcon.className = 'fas fa-moon';
+    if (themeIcon) themeIcon.className = 'fas fa-moon';
     localStorage.setItem('theme', 'light');
   }
 }
@@ -25,11 +25,13 @@ if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
   setTheme('light');
 }
 
-// Toggle on click
-themeToggle?.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  setTheme(current);
-});
+// Toggle on click (safe)
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(current);
+  });
+}
 
 // ===== Quiz Logic =====
 const questions = [
@@ -113,15 +115,15 @@ function renderQuestionList() {
     });
   };
 
-  renderList(questionList);
-  renderList(questionListMobile);
+  if (questionList) renderList(questionList);
+  if (questionListMobile) renderList(questionListMobile);
 }
 
 function updateProgress() {
   const total = shuffledQuestions.length;
   const progress = ((currentQuestionIndex + 1) / total) * 100;
-  progressBar.style.width = `${progress}%`;
-  progressText.textContent = `${currentQuestionIndex + 1} / ${total}`;
+  if (progressBar) progressBar.style.width = `${progress}%`;
+  if (progressText) progressText.textContent = `${currentQuestionIndex + 1} / ${total}`;
 }
 
 function showQuestion() {
@@ -130,23 +132,25 @@ function showQuestion() {
   renderQuestionList();
 
   const q = shuffledQuestions[currentQuestionIndex];
-  questionEl.textContent = q.question;
+  if (questionEl) questionEl.textContent = q.question;
 
   q.options.forEach((option, index) => {
     const button = document.createElement('button');
     button.className = 'btn btn-outline-secondary btn-choice w-100';
     button.textContent = option;
     button.addEventListener('click', () => selectAnswer(button, index === q.correct));
-    answerButtonsEl.appendChild(button);
+    if (answerButtonsEl) answerButtonsEl.appendChild(button);
   });
 
-  nextButton.textContent = currentQuestionIndex === shuffledQuestions.length - 1 
-    ? 'Finish Quiz' 
-    : 'Next Question';
+  if (nextButton) {
+    nextButton.textContent = currentQuestionIndex === shuffledQuestions.length - 1 
+      ? 'Finish Quiz' 
+      : 'Next Question';
+  }
 }
 
 function resetState() {
-  answerButtonsEl.innerHTML = '';
+  if (answerButtonsEl) answerButtonsEl.innerHTML = '';
 }
 
 function selectAnswer(selectedBtn, isCorrect) {
@@ -166,23 +170,25 @@ function selectAnswer(selectedBtn, isCorrect) {
     correctBtn.disabled = true;
   }
 
-  nextButton.style.display = 'inline-block';
+  if (nextButton) nextButton.style.display = 'inline-block';
 }
 
-// Use `onclick` to prevent duplicate listeners
-nextButton.onclick = () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    showQuestion();
-  } else {
-    showResults();
-  }
-};
+// Use onclick to prevent duplicate listeners
+if (nextButton) {
+  nextButton.onclick = () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+  };
+}
 
 function showResults() {
   resetState();
   
-  //  Dynamic feedback based on score
+  //  FIXED: Added missing emoji variable
   let message, emoji, alertClass;
   
   if (score === 20) {
@@ -195,25 +201,29 @@ function showResults() {
     message = "Really Good Score but could do better ";
     alertClass = "alert-info";
   } else if (score >= 5) {
-    message = "OK score — give it another try ";
+    message = "OK score — give it another try";
     alertClass = "alert-warning";
   } else {
-    message = "Bad luck — try again! ";
+    message = "Bad luck — try again!";
     alertClass = "alert-danger";
   }
 
-  questionEl.innerHTML = `
-    <div class="text-center">
-      <div class="fs-1 mb-3">${emoji}</div>
-      <h2 class="mb-4">${message}</h2>
-      <div class="alert ${alertClass} score-alert" role="alert">
-        You scored <strong>${score}</strong> out of <strong>20</strong>
+  if (questionEl) {
+    questionEl.innerHTML = `
+      <div class="text-center">
+        <div class="fs-1 mb-3">${emoji}</div>
+        <h2 class="mb-4">${message}</h2>
+        <div class="alert ${alertClass} score-alert" role="alert">
+          You scored <strong>${score}</strong> out of <strong>20</strong>
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  }
   
-  nextButton.textContent = '↺ Restart Quiz';
-  nextButton.onclick = startQuiz;
+  if (nextButton) {
+    nextButton.textContent = '↺ Restart Quiz';
+    nextButton.onclick = startQuiz;
+  }
 }
 
 // Start!
